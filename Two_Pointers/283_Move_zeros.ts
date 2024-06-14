@@ -13,7 +13,7 @@ Output: [0]
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-var moveZeroes = function (nums: number[]) {
+var moveZeroes = function (nums: number[]): void {
   // initial 2 pointers
   let firstIdx = 0;
   let secIdx = 1;

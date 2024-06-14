@@ -14,7 +14,7 @@ Output: false
  * @param {string} t
  * @return {boolean}
  */
-var isSubsequence = function (s: string, t: string) {
+const isSubsequence = (s: string, t: string): boolean => {
   // initial s, t pointer
   let sPointer = 0;
   let tPointer = 0;
