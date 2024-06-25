@@ -24,33 +24,24 @@ var decodeString = function (s: string): string {
   for (let i = 0; i < s.length; i++) {
     const ele = s[i];
 
-    // until we meet ']' we will contiue to stack
     if (ele !== "]") {
       stack.push(ele);
     } else {
-      // first case we iterate back on stack
-      // 1. we have stack 2. it's not '['
-      // if so we continue to add pop + subStr
-      let subStr = "";
+      // strings
+      let strings = "";
       while (stack.length && stack[stack.length - 1] !== "[") {
-        subStr = stack.pop() + subStr;
+        strings = stack.pop() + strings;
       }
-      // when we find '[' we will pop it out
       stack.pop();
-
-      //  and start to find our digits
+      // digits
       let digits = "";
-      // we will continue our check until we meet isNaN
-      while (stack.length && !isNaN(parseInt(stack[stack.length - 1])) {
-        // what we pop will be in first then perv 'pop + current'
+      while (stack.length && !isNaN(parseInt(stack[stack.length - 1]))) {
         digits = stack.pop() + digits;
       }
-
-      // after we find our next char we will push what we have
-      // subStr we find and digit we found
-      stack.push(subStr.repeat(parseInt(digits)));
+      const times = parseInt(digits);
+      stack.push(strings.repeat(times));
     }
   }
-  // finally we will add them up
+
   return stack.join("");
 };
