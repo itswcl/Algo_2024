@@ -41,11 +41,12 @@ var findCircleNumDFS = function (isConnected) {
   return provinces;
 };
 
+// https://leetcode.com/explore/learn/card/graph/618/disjoint-set/3844/ detail explaination
 class UnionFind {
   root: any[];
   rank: any[];
   groups: any;
-  
+
   constructor(size) {
     this.root = new Array(size);
     this.rank = new Array(size).fill(1);
@@ -64,10 +65,14 @@ class UnionFind {
     const rootX = this.find(x);
     const rootY = this.find(y);
     if (rootX !== rootY) {
+      // choose of teller nodes we update the oposite of root node
       if (this.rank[rootX] > this.rank[rootY]) this.root[rootY] = rootX;
       if (this.rank[rootX] < this.rank[rootY]) this.root[rootX] = rootY;
+
+      // if it's same it doesnt matter which root node
       if (this.rank[rootX] === this.rank[rootY]) {
         this.root[rootY] = rootX;
+        // and we increase our high by 1
         this.rank[rootX]++;
       }
       this.groups--;
