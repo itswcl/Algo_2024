@@ -28,10 +28,17 @@ Output: -1
 Explanation: There are no exits in this maze.
  */
 
+/**
+ * @param {character[][]} maze
+ * @param {number[]} entrance
+ * @return {number}
+ */
 var nearestExit = function (maze, entrance) {
   // find our max height and width (prevent new point over the limit)
   const mazeHeight = maze.length;
   const mazeWidth = maze[0].length;
+  // show our entrance point
+  const [startRow, startCol] = entrance;
   // set our direction each iterate we will check up down left right
   const directions = [
     [1, 0],
@@ -39,41 +46,51 @@ var nearestExit = function (maze, entrance) {
     [-1, 0],
     [0, -1],
   ];
-  // show our entrance point
-  const [startRow, startCol] = entrance;
-  // start queue from starting point and step 0
+  // start queue from starting point and step 0 initial point
   const queue = [[startRow, startCol, 0]];
 
   while (queue.length) {
+    // we get our initial point from queue
     const [curRow, curCol, steps] = queue.shift();
 
-    // go thru the direction to check each new point
+    // go thru the direction meaning we are trying next step and see if valid
     for (const [row, col] of directions) {
-      const newRow = row + curRow;
-      const newCol = col + curCol;
+      const nextRow = curRow + row;
+      const nextCol = curCol + col;
 
-      // check if new point in the Maze and open
+      // after our step, check if we are in the Maze by
+      // 1. row still positive and within the height
+      // 2. col still positive and within the width
+      // 3. if it's '.' meaning it's not wall
       const isWithinMaze =
-        newRow >= 0 && newRow < mazeHeight && newCol >= 0 && newCol < mazeWidth;
-      const isPath = isWithinMaze && maze[newRow][newCol] === ".";
+        nextRow >= 0 &&
+        nextRow < mazeHeight &&
+        nextCol >= 0 &&
+        nextCol < mazeWidth;
+      const isPath = isWithinMaze && maze[nextRow][nextCol] === ".";
       if (isPath) {
-        // check if we are in edge point AND not entrance point
+        // check if the are in the edge and not entrance
+        // 1. row 0 meaning top of boundry / height - 1 meaning buttom of boundry
+        // 2. col 0 meaning left of boundry / width - 1 meaning right of boundry
+        // 3. row = startRow, col = startCol to prevent we in the entrance
         const isNewInMaze =
-          newRow === 0 ||
-          newRow === mazeHeight - 1 ||
-          newCol === 0 ||
-          newCol === mazeWidth - 1;
-        const isNotEntrance = !(newRow === startRow && newCol === startCol);
+          nextRow === 0 ||
+          nextRow === mazeHeight - 1 ||
+          nextCol === 0 ||
+          nextCol === mazeWidth - 1;
+        const isNotEntrance = !(nextRow === startRow && nextCol === startCol);
         const isExit = isNewInMaze && isNotEntrance;
-        // if so we find our existing point and step + 1 is out
-        if (isExit) return steps + 1;
+        // if so we find our edge point and next step it will be out
+        const nextStep = steps + 1;
+        if (isExit) return nextStep;
 
         // if not we continue our queue and mark this point as wall '+'
-        maze[newRow][newCol] = "+";
-        queue.push([newRow, newCol, steps + 1]);
+        maze[nextRow][nextCol] = "+";
+        queue.push([nextRow, nextCol, nextStep]);
       }
     }
   }
 
+  // if we dont find exit we return -1
   return -1;
 };
