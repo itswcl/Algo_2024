@@ -10,6 +10,13 @@ return: [6.0, 0.5, -1.0, 1.0, -1.0 ]
 note: x is undefined => -1.0
 Example 2:
 
+graph for example 1
+Map(3) {
+  'a' => Map(1) { 'b' => 2 },
+  'b' => Map(2) { 'a' => 0.5, 'c' => 3 },
+  'c' => Map(1) { 'b' => 0.3333333333333333 }
+}
+
 Input: equations = [["a","b"],["b","c"],["bc","cd"]], values = [1.5,2.5,5.0], queries = [["a","c"],["c","b"],["bc","cd"],["cd","bc"]]
 Output: [3.75000,0.40000,5.00000,0.20000]
 Example 3:
