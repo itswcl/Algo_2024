@@ -1,0 +1,75 @@
+import './styles.css';
+
+export default function App() {
+  return (
+    <>
+      <header>Header</header>
+      <div className="column">
+        <nav>Navigation</nav>
+        <main>Main</main>
+        <aside>Sidebar</aside>
+      </div>
+      <footer>Footer</footer>
+    </>
+  );
+}
+
+
+body {
+  font-family: sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header,
+nav,
+main,
+aside,
+footer {
+  padding: 12px;
+  text-align: center;
+}
+
+header {
+  height: 60px;
+  background-color: tomato;
+}
+
+.column {
+  display: flex;
+  flex-grow: 1;
+}
+
+nav,
+aside {
+  width: 100px;
+}
+
+nav {
+  background-color: coral;
+}
+
+main {
+  flex-grow: 1;
+  background-color: moccasin;
+}
+
+aside {
+  background-color: sandybrown;
+}
+
+footer {
+  height: 100px;
+  background-color: slategray;
+}
