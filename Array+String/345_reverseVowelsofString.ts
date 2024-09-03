@@ -9,40 +9,32 @@ Input: s = "leetcode"
 Output: "leotcede"
  */
 
-function reverseVowels(s: string): string {
-  // get the set of vowels including upper case
-  const vowels = new Set("aeiouAEIOU".split(""));
-  // get arrary of letter for easy swap
-  let letters = s.split("");
-  // set right and left pointer
-  let leftIdx = 0;
-  let rightIdx = letters.length - 1;
+var reverseVowels = function (s) {
+  // we have vowels set
+  const vowels = new Set('aeiouAEIOU'.split(''));
+  // split in to array for easiness
+  const strings = s.split('');
+  // set our left and right pointer
+  let left = 0;
+  let right = s.length - 1;
 
-  // looping until pointers meet
-  while (leftIdx < rightIdx) {
-    const leftEle = letters[leftIdx];
-    const rightEle = letters[rightIdx];
-
-    // if left pointer not vowels we contiue left pointer
-    if (!vowels.has(leftEle)) {
-      leftIdx++;
-      continue;
-    }
-
-    // when left pointer meet we will check right pointer
-    if (!vowels.has(rightEle)) {
-      rightIdx--;
-      continue;
-    }
-
-    // til both meet vowels we will swap and move both pointer
-    if (vowels.has(leftEle) && vowels.has(rightEle)) {
-      letters[leftIdx] = rightEle;
-      letters[rightIdx] = leftEle;
-      leftIdx++;
-      rightIdx--;
-    }
+  // continuely iterate while left less than right
+  while (left < right) {
+      const leftEle = strings[left];
+      const rightEle = strings[right];
+      
+      // check our current element both left and right
+      if (!vowels.has(leftEle)) left++;
+      if (!vowels.has(rightEle)) right--;
+      // when we find both vowels we update our element
+      // increase left pointer and decrease right pointer
+      if (vowels.has(leftEle) && vowels.has(rightEle)) {
+          strings[left] = rightEle;
+          strings[right] = leftEle;
+          left++;
+          right--;
+      }
   }
-  // since it's array we need to join to be string
-  return letters.join("");
-}
+  // in the end we return our result and join back to string
+  return strings.join('')
+};

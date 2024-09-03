@@ -30,33 +30,26 @@ function reverseWords(s: string): string {
   return resultArr.join("").trim();
 }
 
-function reverseWords1(s: string): string {
-  let arr = s.split(" ");
-  let leftIdx = 0;
-  let rightIdx = arr.length - 1;
+var reverseWords1 = function (s) {
+  // intial our string arr
+  const arr = s.split(" ");
+  // intial left and right pointer
+  let left = 0;
+  let right = arr.length - 1;
 
-  while (leftIdx < rightIdx) {
-    const leftIdxEle = arr[leftIdx];
-    const rightIdxEle = arr[rightIdx];
-
-    if (leftIdxEle === " ") {
-      leftIdx++;
-      continue;
-    }
-
-    if (rightIdxEle === " ") {
-      rightIdx--;
-      continue;
-    }
-
-    [arr[leftIdx], arr[rightIdx]] = [rightIdxEle, leftIdxEle];
-
-    leftIdx++;
-    rightIdx--;
+  // iterate thru left and right pointer
+  while (left < right) {
+    const leftEle = arr[left];
+    const rightEle = arr[right];
+    // switch left and right element
+    [arr[left], arr[right]] = [rightEle, leftEle];
+    left++;
+    right--;
   }
 
+  // filter our '' element and join with space
   return arr.filter((ele) => ele.length !== 0).join(" ");
-}
+};
 
 function reverseWords2(s: string): string {
   // Split the string into words, handling multiple spaces
