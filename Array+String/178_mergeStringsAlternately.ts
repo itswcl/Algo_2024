@@ -24,30 +24,37 @@ merged: a p b q c   d
 
 // recursive
 function mergeAlternately(word1: string, word2: string): string {
+  // base case either one is empty
   if (word1 === "" || word2 === "") return word1 + word2;
-
+  // we will find our starting point since we need to recursive slice from 1
   const firstLetters = word1[0] + word2[0];
+
+  // find our rest of letters with recursive word.slice(1) both word1 and word2
   const recursiveLetters = mergeAlternately(word1.slice(1), word2.slice(1));
+
+  // finally we combine the base to our recurisve result
   return firstLetters + recursiveLetters;
 }
 
 // iterate
 function _mergeAlternately(word1: string, word2: string): string {
-  // result string with let variable
+  // initial our total length
+  // initial result string
+  const n = word1.length + word2.length;
   let result = "";
-  // find the total length
-  const totalLength = word1.length + word2.length;
-  // iterate thru total length
-  for (let i = 0; i < totalLength; i++) {
-    // while iterate if word length greater than current index we add
-    if (i < word1.length) {
+  // iterate total length
+  for (let i = 0; i < n; i++) {
+    // check word1 length with current idx
+    if (word1.length > i) {
+      // add to result
       result += word1[i];
     }
-
-    if (i < word2.length) {
+    // check word2 length with current idx
+    if (word2.length > i) {
+      // add to result
       result += word2[i];
     }
   }
-
+  // result
   return result;
 }
