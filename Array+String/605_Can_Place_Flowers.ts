@@ -9,30 +9,24 @@ Input: flowerbed = [1,0,0,0,1], n = 2
 Output: false
  */
 
-function canPlaceFlowers(flowerbed: number[], n: number): boolean {
-  // have var both n and new bed
-  let leftFlowers = n;
-  let newFlowerbed = flowerbed;
-
-  // iterate thru bed if pervious and next is 0 we plant it and decrease leftover
+var canPlaceFlowers = function (flowerbed, n) {
+  // we multa our input ideally we should copy and use it as new ref
+  // iterate the length of bed
   for (let i = 0; i < flowerbed.length; i++) {
-    if (leftFlowers === 0) break;
+    if (n === 0) break;
 
-    const currentBed = newFlowerbed[i];
-    const isPerviousEmpty = isEmptyPlent(newFlowerbed[i - 1]);
-    const isNextEmpty = isEmptyPlent(newFlowerbed[i + 1]);
+    // we need to compare the prev, cur, next
+    const cur = flowerbed[i];
+    const perv = flowerbed[i - 1];
+    const next = flowerbed[i + 1];
 
-    if (isPerviousEmpty && isNextEmpty && currentBed === 0) {
-      newFlowerbed[i] = 1;
-      leftFlowers--;
+    // perv and next empty and current is empty
+    if (cur === 0 && perv !== 1 && next !== 1) {
+      // when we flower one we will decrease the leftover flower
+      flowerbed[i] = 1;
+      n--;
     }
   }
-
-  // if leftover is 0 it means we plent without adjacnet
-  return leftFlowers === 0;
-}
-
-function isEmptyPlent(bed) {
-  if (bed == null) return true;
-  return bed === 0;
-}
+  // finally we check we used up all flower
+  return n === 0;
+};
