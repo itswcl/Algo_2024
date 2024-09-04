@@ -21,41 +21,36 @@ Explanation: The groups are "a" and "bbbbbbbbbbbb". This compresses to "ab12".
  * @return {number}
  */
 var compress = function (chars) {
-  // initial our write and read idx
+  // initial write and read idx
   let writeIdx = 0;
   let readIdx = 0;
 
-  // iterate thru chars
+  // iterate thru readIdx
   while (readIdx < chars.length) {
-    // initial our current char and count
-    let currentChar = chars[readIdx];
+    // initial count and current char
+    const curChar = chars[readIdx];
     let count = 0;
 
-    // while readIdx within chars length and the char is same
-    while (readIdx < chars.length && currentChar === chars[readIdx]) {
-      // increase our reading and increase count
-      readIdx++;
+    // continue to increase curChar is same as iteratation
+    while (curChar === chars[readIdx]) {
       count++;
+      readIdx++;
     }
-    // once we find not match char
-    // we will set our current writeIdx to our char
-    // increase writeIdx since the current writeIdx updated
-    chars[writeIdx] = currentChar;
+
+    // once it's done we update our writeIdx with current char
+    chars[writeIdx] = curChar;
+    // increase our writeIdx and we ready for next writeIdx
     writeIdx++;
 
-    // we check if we have more than 1 same char
+    // we have our count we need to iterate and update our writeIdx
+    // only if the count greater than 1 (per ask)
     if (count > 1) {
-      // transform to string for iterate
       const countStr = count.toString();
-      // go thru our count string
       for (let i = 0; i < countStr.length; i++) {
-        // we will update the current writeIdx
-        // and increase our writeIdx since we write our new wrieIdx with count
         chars[writeIdx] = countStr[i];
         writeIdx++;
       }
     }
   }
-  // finally we return our current length of updated length
   return writeIdx;
 };
