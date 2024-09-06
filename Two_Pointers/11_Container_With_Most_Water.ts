@@ -15,44 +15,50 @@ Output: 1
  * @param {number[]} height
  * @return {number}
  */
-var maxArea = function (height: number[]): number {
-  // const length = height.length;
-  // let nextIdx = 1;
-  // let currentArea = 0;
-
-  // for (let currentIdx = 0; currentIdx < length; currentIdx++) {
-  //     const currnetHeight = height[currentIdx]
-  //     let currentWidth = 0;
-
-  //     while (nextIdx < length) {
-  //         const minIdx = Math.min(currnetHeight, height[nextIdx])
-  //         currentWidth = nextIdx - currentIdx;
-  //         currentArea = Math.max(minIdx * currentWidth, currentArea)
-  //         nextIdx++;
-  //     }
-  //     nextIdx = 1;
-  // }
-  // return currentArea
+var maxArea = function (height) {
+  // initial our start and end idx
+  let start = 0;
+  let end = height.length - 1;
   let maxArea = 0;
-  let leftIdx = 0;
-  let rightIdx = height.length - 1;
 
-  while (leftIdx < rightIdx) {
-    const leftHeight = height[leftIdx];
-    const rightHeight = height[rightIdx];
-    const minHeight = Math.min(leftHeight, rightHeight);
-    const distance = rightIdx - leftIdx;
-    const currentArea = minHeight * distance;
-    maxArea = Math.max(maxArea, currentArea);
+  // we will move our start and end idx so we iterate while end greater than start
+  while (start < end) {
+      // in each iteration we will check the current num in both index
+      const startNum = height[start];
+      const endNum = height[end];
+      // current width to math the area
+      const curWidth = end - start;
+      // we get the min as our current height
+      const curHeight = Math.min(startNum, endNum);
+      const curArea = curHeight * curWidth;
+      // update our max
+      maxArea = Math.max(curArea, maxArea);
 
-    if (leftHeight < rightHeight) {
-      leftIdx++;
-    } else if (leftHeight > rightHeight) {
-      rightIdx--;
-    } else {
-      leftIdx++;
-      rightIdx--;
-    }
+      // now we moving the idx based on the numbers
+      
+      if (startNum < endNum) {
+          start++;
+      } else if (startNum > endNum) {
+          end--;
+      } else {
+          start++
+          end--
+      }
   }
-  return maxArea;
+
+  // while (start < height.length) {
+  //     const startNum = height[start];
+  //     const endNum = height[end];
+  //     const minHeight = Math.min(startNum, endNum);
+  //     const width = end - start
+  //     const curArea = minHeight * width;
+  //     maxArea = curArea > maxArea ? curArea : maxArea;
+  //     end++;
+
+  //     if (end >= height.length) {
+  //         start++;
+  //         end = start + 1;
+  //     }
+  // }
+  return maxArea
 };
