@@ -26,29 +26,35 @@ Apply Operation 2: "baaccc" -> "abbccc"
  * @param {string} word2
  * @return {boolean}
  */
-var closeStrings = function (word1: string, word2: string): boolean {
+var closeStrings = function (word1, word2) {
+  // first check if length different
   if (word1.length !== word2.length) return false;
 
-  let word1Map = new Map();
-  let word2Map = new Map();
+  // we build both map
+  let map1 = new Map();
+  let map2 = new Map();
 
   for (let i = 0; i < word1.length; i++) {
-    const letter1 = word1[i];
-    const letter2 = word2[i];
-    word1Map.set(letter1, (word1Map.get(letter1) || 0) + 1);
-    word2Map.set(letter2, (word2Map.get(letter2) || 0) + 1);
+    const wordOne = word1[i];
+    const wordTwo = word2[i];
+
+    map1.set(wordOne, (map1.get(wordOne) || 0) + 1);
+    map2.set(wordTwo, (map2.get(wordTwo) || 0) + 1);
   }
 
-  for (let [key, value] of word1Map) {
-    if (!word2Map.has(key)) return false;
+  // we check the values difference
+  let set1Values = [...map1.values()].sort((a, b) => a - b);
+  let set2Values = [...map2.values()].sort((a, b) => a - b);
+
+  for (let i = 0; i < set1Values.length; i++) {
+    if (set1Values[i] !== set2Values[i]) return false;
   }
 
-  let sort1 = [...word1Map.values()].sort((a, b) => a - b);
-  let sort2 = [...word2Map.values()].sort((a, b) => a - b);
-
-  for (let i = 0; i < sort1.length; i++) {
-    if (sort1[i] !== sort2[i]) return false;
+  // we check the key difference
+  for (let [key] of map1) {
+    if (!map2.has(key)) return false;
   }
 
+  // after pass all the check we give the true
   return true;
 };
