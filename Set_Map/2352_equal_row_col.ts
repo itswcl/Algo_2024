@@ -21,22 +21,26 @@ Explanation: There are 3 equal row and column pairs:
  * @param {number[][]} grid
  * @return {number}
  */
-var equalPairs = function (grid: number[][]): number {
-  const length = grid.length;
-  // initial our map and count
+var equalPairs = function (grid) {
   let map = new Map();
   let sum = 0;
 
-  // first iterate the row to find each key:value
-  for (let i = 0; i < length; i++) {
-    const row = grid[i].join(",");
-    map.set(row, (map.get(row) || 0) + 1);
+  // iterate as "row"
+  for (let item of grid) {
+    // join with comma because arrary is with , as default
+    // [1,2,3] => '123'
+    const row = item.join(",");
+    // we set base the string and count
+    map.set(row, (map.get(row) | 0) + 1);
   }
 
-  // iterate the col to find the key:value if first time seeing combination we don't add count
-  for (let j = 0; j < length; j++) {
-    const col = grid.map((row) => row[j]).join(",");
-    sum += map.get(col) || 0;
+  // iterate as "col"
+  for (let i = 0; i < grid.length; i++) {
+    // we need to find each element of idx element
+    // join with , as array default
+    const col = grid.map((row) => row[i]).join(",");
+    // finally we add the count if we found in the map
+    sum += map.get(col) | 0;
   }
   return sum;
 };
