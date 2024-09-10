@@ -43,19 +43,17 @@ var reverseList = function (head) {
   // current list as head
   let prev = null;
   let curr = head;
-  // next in here is play a temp rule
-  let next = null;
 
   // when current is exist meaning we haven't get to end of list
   while (curr) {
     // 1. we set our curr.next to temp value
-    next = curr.next;
+    const temp = curr.next;
     // 2. we move our pointer next to prev node
     curr.next = prev;
     // 3. set new prev as pervious curr
     prev = curr;
     // 4. set new cur to next node
-    curr = next;
+    curr = temp;
   }
   // finally we return prev head
   return prev;
