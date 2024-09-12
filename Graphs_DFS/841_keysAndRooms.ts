@@ -6,15 +6,15 @@ var canVisitAllRooms = function(rooms) {
     // a empty set to represent the room we visited
     const visited = new Set();
 
-    const dfs = (room) => {
+    const dfs = (key) => {
         // if we had visited the room we dont do thing
-        if (visited.has(room)) return;
+        if (visited.has(key)) return;
 
         // we add the current we visiting
-        visited.add(room)
+        visited.add(key)
 
         // now we go thru the key in this room
-        for (let keysOfRoom of rooms[room]) {
+        for (let keysOfRoom of rooms[key]) {
 
             // we add each key to room we able to visit
             dfs(keysOfRoom)
