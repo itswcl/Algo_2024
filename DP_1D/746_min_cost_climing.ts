@@ -25,17 +25,21 @@ The total cost is 6.
  * @return {number}
  */
 var minCostClimbingStairs = function (cost) {
-  const n = cost.length;
-  if (n === 0) return 0;
-  // [prev2, prev1, current, .......]
-  let prev2 = cost[0];
-  let prev1 = cost[1];
+  if (!cost.length) return 0;
+  // we either start from idx 0 or 1
+  let zeroCost = cost[0],
+    oneCost = cost[1];
 
-  for (let i = 2; i < n; i++) {
-    const current = cost[i];
-    const minNum = Math.min(prev2, prev1);
-    prev2 = prev1;
-    prev1 = minNum + current;
+  // start from idx 2
+  for (let i = 2; i < cost.length; i++) {
+    const stepCost = cost[i];
+    // we choose which one we start either p2 or p1
+    const prevCost = Math.min(zeroCost, oneCost);
+    // we move p2 to p1
+    zeroCost = oneCost;
+    // new p1 is current plus pervious step
+    oneCost = stepCost + prevCost;
   }
-  return Math.min(prev2, prev1);
+  // finally we find our min cost either in step1 or step2
+  return Math.min(zeroCost, oneCost);
 };
