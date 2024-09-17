@@ -18,22 +18,20 @@ Total amount you can rob = 2 + 9 + 1 = 12.
  * @return {number}
  */
 var rob = function (nums) {
-  const n = nums.length;
-  if (n === 0) return 0;
-  if (n === 1) return nums[0];
+  if (nums.length === 1) return nums[0];
+  // start zero and one idx value
+  let robZero = nums[0];
+  let robOne = Math.max(nums[0], nums[1]);
 
-  // [prev2, prev1, cur, ....]
-  let prev2 = nums[0];
-  let prev1 = Math.max(nums[0], nums[1]);
-
-  // [..., current]
-  for (let i = 2; i < n; i++) {
-    const cur = prev2 + nums[i];
-    const newMax = Math.max(cur, prev1);
-    prev2 = prev1;
-    prev1 = newMax;
+  // we will start idx 2 since we initial 0 and 1
+  for (let i = 2; i < nums.length; i++) {
+    // we will get our current rob and sum of zero and current rob
+    const curRob = nums[i];
+    const sumRob = robZero + curRob;
+    // we update our zero to one idx
+    robZero = robOne;
+    // update robOne to be highest amount
+    robOne = Math.max(robOne, sumRob);
   }
-
-  // prev1 will always keep the max
-  return prev1;
+  return robOne;
 };
