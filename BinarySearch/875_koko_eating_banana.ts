@@ -40,9 +40,11 @@ var minEatingSpeed = function (piles, h) {
     // mid resent the hour
     const mid = Math.floor((right - left) / 2) + left;
     // if it eats all our right is the mid
-    if (canEatAll(mid)) right = mid;
-    // if it can't eat all our left from mid +1
-    if (!canEatAll(mid)) left = mid + 1;
+    if (canEatAll(mid)) {
+      right = mid;
+    } else {
+      left = mid + 1;
+    }
   }
   return left;
 };
