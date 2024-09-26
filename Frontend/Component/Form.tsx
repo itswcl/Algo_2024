@@ -47,7 +47,7 @@ async function submitForm(event) {
 
     const text = await response.text();
     alert(text);
-  } catch (_) {
+  } catch (error) {
     alert("Error submitting form!");
   }
 }
