@@ -35,3 +35,8 @@ var validWordAbbreviation = function (word, abbr) {
   // after while loop if i and j is same length of input it's true
   return i === word.length && j === abbr.length;
 };
+
+/**
+ * time is O(n) we need to go thr all char
+ * space is O(1) because we only using 2 pointer
+ */
