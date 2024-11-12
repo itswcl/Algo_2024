@@ -27,3 +27,7 @@ var minSubArrayLen = function (target, nums) {
   // get min result
   return minLength === Infinity ? 0 : minLength;
 };
+/**
+ * O(N) with size of nums
+ * O(1) a few of variable
+ */
