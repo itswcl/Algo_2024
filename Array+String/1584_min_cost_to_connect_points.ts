@@ -3,41 +3,52 @@
  * @return {number}
  */
 var minCostConnectPoints = function (points) {
-  const n = points.length;
-  // initial dist and visited array
-  const dist = new Array(n).fill(Infinity);
-  const visited = new Array(n).fill(false);
-  // initial total
+  // initial distance and visited array to keep track min and point we visited
+  // we using infinity to ensure we swap each time
+  const dist = new Array(points.length).fill(Infinity);
+  const visited = new Array(points.length).fill(false);
+  // initial total to keep the distance we updated
   let total = 0;
-  // set first dist is [0, 0]
+  // starting point
   dist[0] = 0;
 
-  for (let i = 0; i < n; i++) {
-    // initial our base min and minIdx for swap
+  // iterate thru points
+  for (let i = 0; i < points.length; i++) {
+    // first we need to find the min
+    // initial inifnity and -1 for easy swap
     let min = Infinity;
     let minIdx = -1;
 
-    // iterate to update current min and minIdx when not visited
-    for (let j = 0; j < n; j++) {
-      if (!visited[j] && dist[j] < min) {
+    for (let j = 0; j < points.length; j++) {
+      // check not visited and able swap min idx
+      if (!visited[j] && min > dist[j]) {
         min = dist[j];
         minIdx = j;
       }
     }
-
-    // now we mark the minIdx we visited and update total
+    // after loop updating current min and minIdx we will swap and update after
     visited[minIdx] = true;
     total += min;
 
-    // iterate n again to update current min for each route and check current is min
-    for (let k = 0; k < n; k++) {
-      if (!visited[k]) {
-        const distance =
-          Math.abs(points[minIdx][0] - points[k][0]) +
-          Math.abs(points[minIdx][1] - points[k][1]);
-        dist[k] = Math.min(distance, dist[k]);
+    // second we update the distance with rest of points with current minPoint
+    for (let i = 0; i < points.length; i++) {
+      // we only update unviisted one
+      if (!visited[i]) {
+        // find the current distance
+        const [prevX, prevY] = points[minIdx];
+        const [curX, curY] = points[i];
+        const distance = Math.abs(prevX - curX) + Math.abs(prevY - curY);
+        // and update with current
+        dist[i] = Math.min(dist[i], distance);
       }
     }
   }
+
+  // get our total
   return total;
 };
+
+/**
+ * O(N^2) we walk thru each point and points
+ * O(N) because the distance and visit array
+ */
