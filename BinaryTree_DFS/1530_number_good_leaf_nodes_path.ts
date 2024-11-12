@@ -12,47 +12,48 @@
  * @return {number}
  */
 var countPairs = function (root, distance) {
+  // count to add the edges
   let count = 0;
+
+  // initial dfs to run
   const dfs = (node) => {
-    // base case 
-    // empty node
+    // base case
     if (!node) return [];
-    // found our levave and indicate the base [1] as distance 1
+    // null for both left and right consider leaf with 1
     if (!node.left && !node.right) return [1];
 
-    // callback both left and right
+    // where we get lower down to leaf and find base
     const leftDist = dfs(node.left);
     const rightDist = dfs(node.right);
 
-    // iterate the length check when left plus right. 
-    //if meet the target we can increase count
+    // iterate left right to find potential good
     for (let i = 0; i < leftDist.length; i++) {
       for (let j = 0; j < rightDist.length; j++) {
         if (leftDist[i] + rightDist[j] <= distance) {
-          count += 1;
+          count++;
         }
       }
     }
 
-    // each time we create the distance array to keep each dist + 1 and return callstack
-    // this will be both left and right if any
+    // get our new dist from current node
     let newDist = [];
-    for (let dist of leftDist) {
-      newDist.push(dist + 1);
+    for (let i = 0; i < leftDist.length; i++) {
+      // increase one consider a level up
+      newDist.push(leftDist[i] + 1);
     }
 
-    for (let dist of rightDist) {
-      newDist.push(dist + 1);
+    // and do the same thing for other part of nodes
+    for (let i = 0; i < rightDist.length; i++) {
+      newDist.push(rightDist[i] + 1);
     }
-
     return newDist;
   };
 
-  // initial dfs call from root
+  // run dfs start from root
   dfs(root);
+  // get count
   return count;
 };
 
-/**
- * O(n^2) and O(n)
- */
+// O(n^2) each left node we need to check all the right nodes
+// o(n) recursive call
