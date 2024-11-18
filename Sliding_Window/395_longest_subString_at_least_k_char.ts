@@ -4,45 +4,36 @@
  * @return {number}
  */
 var longestSubstring = function (s, k) {
-  const findLong = (s, start, end, k) => {
-    // if end - start less k we dont have our repeat char
-    if (end - start < k) return 0;
-
-    // build our freq map to have char frequcy from start to end char
+  // we initial helper to track the sub problem
+  const helper = (s, start, end, k) => {
+    // first we will build the freq map
     const freq = new Map();
     for (let i = start; i < end; i++) {
       freq.set(s[i], (freq.get(s[i]) || 0) + 1);
     }
 
-    // we will iterate from start to end
-    for (let mid = start; mid < end; mid++) {
-      // if current mid is not enought to meet k
-      if (freq.get(s[mid]) < k) {
-        // we will continue to find until see a valid char
-        let midNext = mid + 1;
-        while (midNext < end && freq.get(s[midNext]) < k) {
-          midNext++;
-        }
-
-        // once we find our valid char we will check the max repeating char on each site
-        // left site is start to mid
-        // right site is midNext to end
-        return Math.max(
-          findLong(s, start, mid, k),
-          findLong(s, midNext, end, k)
-        );
+    // now we start check the charactor
+    for (let i = start; i < end; i++) {
+      const ele = s[i];
+      // when we find the charctor has lesser than required 'k'
+      // we split into small subset to check the left and right
+      if (freq.get(ele) < k) {
+        const left = helper(s, start, i, k);
+        const right = helper(s, i + 1, end, k);
+        // we will get the max from either side
+        return Math.max(left, right);
       }
     }
 
-    // if we continues to find valid char in earlier loop we just need to find end - start as our repat chars
+    // if we never gets to smaller set we know we have entire repeat chars
     return end - start;
   };
 
-  // starting point from 0 to str length
-  return findLong(s, 0, s.length, k);
+  // initially we will pass our start and end index to keep track
+  return helper(s, 0, s.length, k);
 };
 
 /**
- * O(nlogn ) because we continuesly loop into string and split to each site
- * O(n) for space because recrusive callback
+ * O(n^2) buidling freqency map and recursive depth of dividing into sub string
+ * O(n) recursive call stack
  */
