@@ -111,6 +111,7 @@
             </div>
             ```
             - for React, consditional rendering cause the DOM elements to be removed from document when no longer needed on page
+            - transition: opacity var(--modal-transition-duration) ease-in-out;
        - Internationalize (i18n)
          - overflowing text need to be truncated or wrapped, it shouldn't overflow out the modal
          - for RTL, needs horizontally flipped, we can provide the direction config for render content
